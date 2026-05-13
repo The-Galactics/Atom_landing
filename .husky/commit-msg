@@ -2,7 +2,7 @@
 
 # Regex for Conventional Commits in English
 # Format: type: description (e.g., feat: add new button)
-REGEX="^(feat|fix|docs|style|refactor|perf|test|build|ci|chore|revert)((\(.+\))?): .+"
+REGEX="^(feat|fix|docs|style|refactor|perf|test|build|ci|chore|revert|)((\(.+\))?): .+"
 
 # Get the commit message
 MSG=$(cat "$1")
