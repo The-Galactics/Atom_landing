@@ -1,9 +1,19 @@
-import { SlidingNumber } from "@/components/animate-ui/primitives/texts/sliding-number";
+"use client";
+
+import { Welcome } from "@/components/Welcome";
+import { HomeContent } from "@/components/HomeContent";
+import { useWelcome } from "@/hooks/useWelcome";
 
 export default function Home() {
+  const { showWelcome, enterApp } = useWelcome();
+
   return (
-    <div className="flex min-h-screen items-center justify-center text-6xl font-semibold">
-      <SlidingNumber number={2026} inView />
-    </div>
+    <main className="min-h-screen">
+      {showWelcome ? (
+        <Welcome onEnter={enterApp} />
+      ) : (
+        <HomeContent />
+      )}
+    </main>
   );
 }
