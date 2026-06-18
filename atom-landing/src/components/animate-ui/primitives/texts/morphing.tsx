@@ -22,6 +22,7 @@ type MorphingTextProps = Omit<HTMLMotionProps<'span'>, 'children'> & {
   delay?: number;
   loop?: boolean;
   holdDelay?: number;
+  suffix?: React.ReactNode | ((currentText: string) => React.ReactNode);
   text: string | string[];
 } & UseIsInViewOptions;
 
@@ -39,6 +40,7 @@ function MorphingText({
   inViewOnce = true,
   loop = false,
   holdDelay = 2500,
+  suffix,
   ...props
 }: MorphingTextProps) {
   const { ref: localRef, isInView } = useIsInView(
@@ -75,6 +77,14 @@ function MorphingText({
       };
     });
   }, [currentText, uniqueId]);
+
+  const suffixContent = React.useMemo(() => {
+    if (typeof suffix === 'function') {
+      return suffix(currentText);
+    }
+
+    return suffix;
+  }, [currentText, suffix]);
 
   React.useEffect(() => {
     if (isInView) {
@@ -125,6 +135,7 @@ function MorphingText({
           </motion.span>
         ))}
       </AnimatePresence>
+      {suffixContent}
     </motion.span>
   );
 }

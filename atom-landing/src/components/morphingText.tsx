@@ -1,3 +1,5 @@
+import Image from 'next/image';
+
 import { MorphingText } from '@/components/animate-ui/primitives/texts/morphing';
 
 const texts = [
@@ -14,7 +16,7 @@ interface MorphingTextDemoProps {
 
 export const MorphingTextDemo = ({
   loop = true,
-  holdDelay = 5000,
+  holdDelay = 4000,
   className = 'text-5xl font-semibold text-white md:text-7xl',
   text = texts,
 }: MorphingTextDemoProps) => {
@@ -25,6 +27,18 @@ export const MorphingTextDemo = ({
       text={text}
       loop={loop}
       holdDelay={holdDelay}
+      suffix={(currentText) =>
+        currentText === 'ATOM' ? (
+          <Image
+            src="/atomLogo.png"
+            alt=""
+            width={128}
+            height={128}
+            priority
+            className="ml-[0.2em] inline-block size-[1.07em] align-[-0.12em] object-contain"
+          />
+        ) : null
+      }
     />
   );
 };
