@@ -11,6 +11,8 @@ import {
 } from "@/components/animate-ui/components/buttons/flip";
 import { WelcomeProps } from "@/types/welcomeProps";
 import { AvatarGroupDemo } from "@/components/Avatars";
+import ArticleSection from "@/components/articleSection";
+
 
 export const HomeContent = ({ onEnter = () => {} }: WelcomeProps) => {
   const items = [
@@ -72,12 +74,14 @@ export const HomeContent = ({ onEnter = () => {} }: WelcomeProps) => {
             </span>
           </div>
 
-          <div className="relative h-24 w-full">
+          <div className="relative h-24 w-full ">
             <Dock
               items={items}
               panelHeight={68}
               baseItemSize={50}
               magnification={70}
+
+              
             />
 
             <div className="pointer-events-none absolute right-10 top-2 z-30 flex flex-col items-center">
@@ -123,6 +127,9 @@ export const HomeContent = ({ onEnter = () => {} }: WelcomeProps) => {
           </div>
         </div>
       </section>
+
+      {/* debajo del hero y pegado arriba (sin gap) */}
+      <ArticleSection />
     </div>
   );
 };
