@@ -1,6 +1,6 @@
 import { WelcomeProps } from "@/types/welcomeProps";
 import { FlipButton, FlipButtonBack, FlipButtonFront, } from "@/components/animate-ui/components/buttons/flip";
-import { MorphingTextDemo } from "@/components/morphingText";
+import { MorphingTextDemo } from "@/components/MorphingText";
 import { StarsBackground } from '@/components/animate-ui/components/backgrounds/stars';
 
 export const Welcome = ({ onEnter }: WelcomeProps) => {

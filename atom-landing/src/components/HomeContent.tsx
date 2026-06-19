@@ -1,8 +1,114 @@
-export const HomeContent = () => {
+"use client";
+
+import { BookOpen, GitBranch, Home } from "lucide-react";
+import Image from "next/image";
+import Orb from "@/components/CircleBackgound";
+import Dock from "@/components/Dock";
+import { FlipButton, FlipButtonBack, FlipButtonFront, } from "@/components/animate-ui/components/buttons/flip";
+import { WelcomeProps } from "@/types/welcomeProps";
+
+export const HomeContent = ({ onEnter }: WelcomeProps) => {
+  const items = [
+    {
+      icon: <Home size={18} />,
+      label: "Home",
+      onClick: () =>
+        document
+          .getElementById("hero")
+          ?.scrollIntoView({ behavior: "smooth" }),
+    },
+    {
+      icon: <BookOpen size={18} />,
+      label: "Docs",
+      onClick: () => window.open("/docs", "_self"),
+    },
+    {
+      icon: <GitBranch size={18} />,
+      label: "GitHub",
+      onClick: () =>
+        window.open(
+          "https://github.com",
+          "_blank",
+          "noopener,noreferrer"
+        ),
+    },
+  ];
+
   return (
-    <section>
-      <h1>Página Principal</h1>
-      <p>Contenido de la aplicación</p>
-    </section>
+    <div className="min-h-screen text-white">
+      <section
+        id="hero"
+        className="relative min-h-svh overflow-hidden bg-black"
+      >
+
+        <div className="absolute inset-0 z-0">
+          <Orb
+            hoverIntensity={2}
+            rotateOnHover
+            hue={0}
+            forceHoverState={false}
+            backgroundColor="#000000"
+          />
+        </div>
+
+
+        <div className="absolute inset-x-0 top-6 z-20">
+
+          <div className="absolute left-10 top-1/2 flex -translate-y-1/2 items-center gap-4">
+            <Image
+              src="/atomLogo.png"
+              alt="Atom logo"
+              width={56}
+              height={56}
+              priority
+              className="h-14 w-14 shrink-0 object-contain"
+            />
+
+            <span className="text-2xl font-bold tracking-[0.25em] text-white">
+              ATOM
+            </span>
+          </div>
+
+
+          <div className="relative mx-auto h-24 w-full max-w-7xl">
+            <Dock
+              items={items}
+              panelHeight={68}
+              baseItemSize={50}
+              magnification={70}
+            />
+          </div>
+        </div>
+
+
+        <div className="relative z-10 flex min-h-svh flex-col items-center justify-center px-6 text-center">
+          <h1 className="text-4xl font-bold sm:text-5xl">
+            Your Android. <br /> Powered by Intelligence.
+          </h1>
+
+          <p className="mt-4 max-w-xl text-base text-white/70 sm:text-lg">
+            Atom understands natural language commands and automates complex tasks across different Android ecosystems, including OneUI, HyperOS, and more.
+          </p>
+          <div >
+
+            <FlipButton
+              onClick={onEnter}
+              size="lg"
+              className="mt-5 rounded-xl shadow-[0_0_24px_rgba(255,255,255,0.28)]"
+            >
+              <FlipButtonFront className="flex items-center justify-center gap-2 h-10 min-w-28 rounded-lg border border-white/70 bg-white px-4 text-xs font-bold uppercase tracking-[0.1em] text-neutral-950">
+                Get started
+                <i className="fi fi-br-arrow-right text-sm leading-none"></i>
+              </FlipButtonFront>
+
+              <FlipButtonBack className="flex items-center justify-center gap-2 h-10 min-w-28 rounded-lg border border-white bg-neutral-950 px-4 text-xs font-bold uppercase tracking-[0.1em] text-white">
+                Explore Atom
+                <i className="fi fi-br-arrow-right text-sm leading-none"></i>
+              </FlipButtonBack>
+            </FlipButton>
+          </div>
+        </div>
+      </section>
+    </div>
   );
 };
