@@ -11,7 +11,7 @@ import {
 } from "@/components/animate-ui/components/buttons/flip";
 import { WelcomeProps } from "@/types/welcomeProps";
 import { AvatarGroupDemo } from "@/components/Avatars";
-import ArticleSection from "@/components/articleSection";
+import Containsrs from "@/components/containsrs";
 
 
 export const HomeContent = ({ onEnter = () => {} }: WelcomeProps) => {
@@ -128,8 +128,7 @@ export const HomeContent = ({ onEnter = () => {} }: WelcomeProps) => {
         </div>
       </section>
 
-      {/* debajo del hero y pegado arriba (sin gap) */}
-      <ArticleSection />
+      <Containsrs />
     </div>
   );
 };
