@@ -178,7 +178,8 @@ export default function Dock({
           isHovered.set(0);
           mouseX.set(Infinity);
         }}
-        className={`${className} fixed top-6 left-1/2 transform -translate-x-1/2 z-50 flex items-end w-fit gap-4 rounded-xl border border-white/40 border-solid pb-2 px-4 border-2`}
+        className={`${className} fixed top-6 left-1/2 transform -translate-x-1/2 z-50 flex items-end w-fit gap-4 rounded-xl border border-white/40 border-solid pb-2 px-4 border-2 bg-white/5 backdrop-blur-md [background:linear-gradient(135deg,rgba(255,255,255,0.10),rgba(255,255,255,0.03))] shadow-[0_0_0_1px_rgba(255,255,255,0.05),0_10px_30px_rgba(0,0,0,0.35)]`} 
+
         style={{ height: panelHeight }}
         role="toolbar"
         aria-label="Application dock"
