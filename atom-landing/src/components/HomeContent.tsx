@@ -58,7 +58,7 @@ export const HomeContent = ({ onEnter = () => {} }: WelcomeProps) => {
         </div>
 
         <div className="absolute inset-x-0 top-6 z-20">
-          {/* Logo */}
+          
           <div className="absolute left-10 top-1/2 flex -translate-y-1/2 items-center gap-4">
             <Image
               src="/logoAtomBorder.png"
