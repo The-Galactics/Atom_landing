@@ -9,6 +9,8 @@ import { AnimateTerminalIcon } from '@/components/ui/animate-icon-terminal';
 import { AnimatePickaxeIcon } from '@/components/ui/animate-icon-pickaxe';
 import { AnimateFingerprintIcon } from '@/components/ui/animate-icon-fingerprint';
 
+import { AtomCore, type AtomCoreHandle } from '@/components/atom-core';
+
 
 
 
@@ -545,6 +547,73 @@ const MagicBento: React.FC<BentoProps> = ({
   const gridRef = useRef<HTMLDivElement>(null);
   const isMobile = useMobileDetection();
   const shouldDisableAnimations = disableAnimations || isMobile;
+
+  // ─── Atom "talk on click" ────────────────────────────────────────────────
+  // Clicking the Atom core triggers a spoken English greeting via the Web
+  // Speech API, while its animation energy is pulsed through the imperative
+  // AtomCoreHandle so the visual reacts as if the atom were actually talking.
+  const atomRef = useRef<AtomCoreHandle>(null);
+  const energyPulseRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const [atomSpeaking, setAtomSpeaking] = useState(false);
+
+  const stopEnergyPulse = useCallback(() => {
+    if (energyPulseRef.current !== null) {
+      clearInterval(energyPulseRef.current);
+      energyPulseRef.current = null;
+    }
+    atomRef.current?.setEnergy(1); // settle back to the resting full-energy glow
+  }, []);
+
+  const handleAtomClick = useCallback(() => {
+    if (typeof window === 'undefined' || !('speechSynthesis' in window)) return;
+
+    const synth = window.speechSynthesis;
+    // A second click while it is talking stops the speech.
+    if (synth.speaking || synth.pending) {
+      synth.cancel();
+      return;
+    }
+
+    const utterance = new SpeechSynthesisUtterance(
+      "Hi, I'm Atom. I turn your everyday language into real actions on your phone. " +
+        "Just tell me what you need, and I'll take care of the rest."
+    );
+    utterance.lang = 'en-US';
+    utterance.rate = 1;
+    utterance.pitch = 1;
+
+    // Prefer a proper English voice when the browser has loaded its voice list.
+    const englishVoice = synth.getVoices().find(v => v.lang.toLowerCase().startsWith('en'));
+    if (englishVoice) utterance.voice = englishVoice;
+
+    utterance.onstart = () => {
+      setAtomSpeaking(true);
+      if (energyPulseRef.current === null) {
+        // Flicker the energy so the atom "pulses" in time with the speech.
+        energyPulseRef.current = setInterval(() => {
+          atomRef.current?.setEnergy(0.55 + Math.random() * 0.45);
+        }, 110);
+      }
+    };
+    const finish = () => {
+      setAtomSpeaking(false);
+      stopEnergyPulse();
+    };
+    utterance.onend = finish;
+    utterance.onerror = finish;
+
+    synth.speak(utterance);
+  }, [stopEnergyPulse]);
+
+  // Cancel any in-flight speech / pulses if the section unmounts.
+  useEffect(() => {
+    return () => {
+      stopEnergyPulse();
+      if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
+        window.speechSynthesis.cancel();
+      }
+    };
+  }, [stopEnergyPulse]);
 
   return (
     <>
@@ -1085,12 +1154,27 @@ const MagicBento: React.FC<BentoProps> = ({
           </div>
 
           <div className="w-full md:w-[560px] lg:w-[520px] flex-shrink-0 h-full flex items-center justify-center">
-            <img
-              src="/ATOM-ARTICLE.png"
-              alt="ATOM-ARTICLE"
-              className="w-full h-auto object-contain"
-              draggable={false}
-            />
+            <div
+              className="w-full aspect-square"
+              role="button"
+              tabIndex={0}
+              aria-pressed={atomSpeaking}
+              aria-label={atomSpeaking ? 'Atom is speaking. Click to stop.' : 'Click to hear Atom speak'}
+              onClick={handleAtomClick}
+              onKeyDown={e => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                  e.preventDefault();
+                  handleAtomClick();
+                }
+              }}
+              style={{
+                cursor: 'pointer',
+                filter:
+                  'drop-shadow(0 0 28px rgba(191,148,255,0.45)) drop-shadow(0 16px 48px rgba(140,92,240,0.35))',
+              }}
+            >
+              <AtomCore ref={atomRef} energy={1} />
+            </div>
           </div>
         </div>
       </BentoCardGrid>
