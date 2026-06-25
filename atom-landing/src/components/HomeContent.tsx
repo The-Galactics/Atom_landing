@@ -12,6 +12,8 @@ import {
 import { WelcomeProps } from "@/types/welcomeProps";
 import { AvatarGroupDemo } from "@/components/Avatars";
 import Containsrs from "@/components/containsrs";
+import AtomIaSection from "@/components/AtomIaSection";
+import Footer from "@/components/Footer";
 
 
 export const HomeContent = ({ onEnter = () => {} }: WelcomeProps) => {
@@ -129,6 +131,10 @@ export const HomeContent = ({ onEnter = () => {} }: WelcomeProps) => {
       </section>
 
       <Containsrs />
+
+      <AtomIaSection />
+
+      <Footer />
     </div>
   );
 };
