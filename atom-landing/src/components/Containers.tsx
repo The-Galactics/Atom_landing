@@ -1,5 +1,19 @@
- import React, { useRef, useEffect, useState, useCallback } from 'react';
+import React, { useRef, useEffect, useState, useCallback } from 'react';
 import { gsap } from 'gsap';
+
+import { AnimateBlocksIcon } from '@/components/ui/animate-icon-blocks';
+import { AnimateAudioLinesIcon } from '@/components/ui/animate-icon-audio-lines';
+import { AnimateSparklesIcon } from '@/components/ui/animate-icon-sparkles';
+
+import { AnimateTerminalIcon } from '@/components/ui/animate-icon-terminal';
+import { AnimatePickaxeIcon } from '@/components/ui/animate-icon-pickaxe';
+import { AnimateFingerprintIcon } from '@/components/ui/animate-icon-fingerprint';
+
+
+
+
+
+
 
 export interface BentoCardProps {
   color?: string;
@@ -491,8 +505,8 @@ const BentoCardGrid: React.FC<{
   children: React.ReactNode;
   gridRef?: React.RefObject<HTMLDivElement | null>;
 }> = ({ children, gridRef }) => (
-  <div
-    className="bento-section grid gap-2 p-3 max-w-[72rem] select-none relative"
+    <div
+    className="bento-section grid gap-2 p-3 w-full select-none relative"
     style={{ fontSize: 'clamp(1rem, 0.9rem + 0.5vw, 1.5rem)' }}
     ref={gridRef}
   >
@@ -722,14 +736,16 @@ const MagicBento: React.FC<BentoProps> = ({
       )}
 
       <BentoCardGrid gridRef={gridRef}>
-        <div className="card-responsive grid gap-2">
+        <div className="flex flex-col md:flex-row items-stretch gap-6">
+          <div className="flex-1">
+            <div className="card-responsive grid gap-2">
           {cardData.map((card, index) => {
             const baseClassName = `card flex flex-col justify-between relative aspect-[4/3] min-h-[200px] w-full max-w-full p-5 rounded-[20px] border border-solid font-light overflow-hidden transition-colors duration-300 ease-in-out hover:-translate-y-0.5 hover:shadow-[0_8px_25px_rgba(0,0,0,0.15)] ${
               enableBorderGlow ? 'card--border-glow' : ''
             }`;
 
             const cardStyle = {
-              backgroundColor: card.color || 'var(--background-dark)',
+              backgroundColor: '#000000',
               borderColor: 'var(--border-color)',
               color: 'var(--white)',
               '--glow-x': '50%',
@@ -751,23 +767,170 @@ const MagicBento: React.FC<BentoProps> = ({
                   clickEffect={clickEffect}
                   enableMagnetism={enableMagnetism}
                 >
-                  {/* Visual icon that can overflow the card without affecting layout */}
-                  {index === 3 && (
-                    <div className="card__icon-layer" aria-hidden="true">
+                  {/* Visual icons that can overflow the card without affecting layout */}
+                  {index === 0 && (
+                    <div
+                      className="card__icon-layer"
+                      aria-hidden="true"
+                      style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+                    >
                       <div
                         className="card__wall-icon-wrap"
                         aria-hidden="true"
+                        style={{ width: 220, height: 220 }}
                       >
-                        <img
-                          src="/iconBrain.png"
-                          alt=""
-                          className="card__wall-icon"
-                          draggable={false}
-                        />
-
+                        <div
+                          style={{
+                            color: 'rgba(255,255,255,0.25)',
+                            width: '100%',
+                            height: '100%',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                          }}
+                        >
+                          <AnimateAudioLinesIcon size={128} />
+                        </div>
                       </div>
                     </div>
                   )}
+
+                  {index === 1 && (
+                    <div
+                      className="card__icon-layer"
+                      aria-hidden="true"
+                      style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+                    >
+                      <div
+                        className="card__wall-icon-wrap"
+                        aria-hidden="true"
+                        style={{ width: 220, height: 220 }}
+                      >
+                        <div
+                          style={{
+                            color: 'rgba(255,255,255,0.25)',
+                            width: '100%',
+                            height: '100%',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                          }}
+                        >
+                          <AnimateBlocksIcon size={128} />
+                        </div>
+                      </div>
+                    </div>
+                  )}
+
+                  {index === 2 && (
+                    <div
+                      className="card__icon-layer"
+                      aria-hidden="true"
+                      style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+                    >
+                      <div
+                        className="card__wall-icon-wrap"
+                        aria-hidden="true"
+                        style={{ width: 220, height: 220 }}
+                      >
+                        <div
+                          style={{
+                            color: 'rgba(255,255,255,0.25)',
+                            width: '100%',
+                            height: '100%',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                          }}
+                        >
+                          <AnimateTerminalIcon size={160} />
+                        </div>
+                      </div>
+                    </div>
+                  )}
+
+                  {index === 3 && (
+                    <div
+                      className="card__icon-layer"
+                      aria-hidden="true"
+                      style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+                    >
+                      <div
+                        className="card__wall-icon-wrap"
+                        aria-hidden="true"
+                        style={{ width: 220, height: 220 }}
+                      >
+                        <div
+                          style={{
+                            color: 'rgba(255,255,255,0.25)',
+                            width: '100%',
+                            height: '100%',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                          }}
+                        >
+                          <AnimatePickaxeIcon size={160} />
+                        </div>
+                      </div>
+                    </div>
+                  )}
+
+                  {index === 5 && (
+                    <div
+                      className="card__icon-layer"
+                      aria-hidden="true"
+                      style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+                    >
+                      <div
+                        className="card__wall-icon-wrap"
+                        aria-hidden="true"
+                        style={{ width: 220, height: 220 }}
+                      >
+                        <div
+                          style={{
+                            color: 'rgba(255,255,255,0.25)',
+                            width: '100%',
+                            height: '100%',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                          }}
+                        >
+                          <AnimateFingerprintIcon size={128} />
+                        </div>
+                      </div>
+                    </div>
+                  )}
+
+                  {index === 4 && (
+                    <div
+                      className="card__icon-layer"
+                      aria-hidden="true"
+                      style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+                    >
+                      <div
+                        className="card__wall-icon-wrap"
+                        aria-hidden="true"
+                        style={{ width: 220, height: 220 }}
+                      >
+                        <div
+                          style={{
+                            color: 'rgba(255,255,255,0.25)',
+                            width: '100%',
+                            height: '100%',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                          }}
+                        >
+                          <AnimateSparklesIcon size={128} />
+                        </div>
+                      </div>
+                    </div>
+                  )}
+
+
 
 
                   <div className="card__header flex justify-between gap-3 relative text-white">
@@ -918,6 +1081,17 @@ const MagicBento: React.FC<BentoProps> = ({
               </div>
             );
           })}
+            </div>
+          </div>
+
+          <div className="w-full md:w-[560px] lg:w-[520px] flex-shrink-0 h-full flex items-center justify-center">
+            <img
+              src="/ATOM-ARTICLE.png"
+              alt="ATOM-ARTICLE"
+              className="w-full h-auto object-contain"
+              draggable={false}
+            />
+          </div>
         </div>
       </BentoCardGrid>
     </>
