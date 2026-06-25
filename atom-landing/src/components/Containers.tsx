@@ -1153,7 +1153,7 @@ const MagicBento: React.FC<BentoProps> = ({
             </div>
           </div>
 
-          <div className="w-full md:w-[560px] lg:w-[520px] flex-shrink-0 h-full flex items-center justify-center">
+          <div className="w-full md:w-[560px] lg:w-[520px] flex-shrink-0 h-full flex flex-col items-center justify-center gap-6">
             <div
               className="w-full aspect-square"
               role="button"
@@ -1175,6 +1175,22 @@ const MagicBento: React.FC<BentoProps> = ({
             >
               <AtomCore ref={atomRef} energy={1} />
             </div>
+
+            <button
+              type="button"
+              onClick={handleAtomClick}
+              aria-pressed={atomSpeaking}
+              className="group inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/[0.06] px-6 py-3 text-sm font-bold uppercase tracking-[0.15em] text-white backdrop-blur transition-all duration-300 hover:border-white/40 hover:bg-white/15"
+            >
+              <span
+                className={`inline-block h-2 w-2 rounded-full ${
+                  atomSpeaking
+                    ? 'animate-pulse bg-[#bf94ff]'
+                    : 'bg-white/60 group-hover:bg-white'
+                }`}
+              />
+              {atomSpeaking ? 'Stop talking' : 'Talk with ATOM!'}
+            </button>
           </div>
         </div>
       </BentoCardGrid>

@@ -24,6 +24,8 @@ export type DocSection = {
   steps?: DocStep[];
   /** When true, the Google Play download button is rendered for this section. */
   googlePlay?: boolean;
+  /** Optional illustration rendered centered below the section content. */
+  image?: { src: string; alt: string };
 };
 
 /** The only distribution channel currently available. */
@@ -64,6 +66,10 @@ export const docSections: DocSection[] = [
         text: "Modern Android devices are powerful but fragmented. Every manufacturer ships its own customization layer, each with different settings, gestures, and behaviors. Atom abstracts that complexity away into a single, conversational interface.",
       },
     ],
+    image: {
+      src: "/instructionsATOM.png",
+      alt: "How Atom works",
+    },
   },
   {
     id: "ecosystem",

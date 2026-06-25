@@ -160,6 +160,18 @@ export default function DocsView({ initialSection }: DocsViewProps) {
               ))}
             </div>
 
+            {active.image && (
+              <div className="mt-12 flex justify-center">
+                <Image
+                  src={active.image.src}
+                  alt={active.image.alt}
+                  width={900}
+                  height={600}
+                  className="h-auto w-full max-w-3xl rounded-2xl"
+                />
+              </div>
+            )}
+
             {active.googlePlay && (
               <div className="mt-10">
                 <GooglePlayButton href={GOOGLE_PLAY_URL} />
