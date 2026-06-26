@@ -15,7 +15,13 @@ export function AnimateBlocksIcon({
   size = 64,
 }: AnimateBlocksIconProps) {
   return (
-    <AnimateIcon animateOnHover>
+    <AnimateIcon
+      animateOnView
+      animateOnViewOnce={false}
+      animateOnHover
+      loop
+      loopDelay={1400}
+    >
       <Blocks size={size} className={className} />
     </AnimateIcon>
   );
