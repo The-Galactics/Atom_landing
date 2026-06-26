@@ -15,7 +15,13 @@ export function AnimateFingerprintIcon({
   size = 128,
 }: AnimateFingerprintIconProps) {
   return (
-    <AnimateIcon animateOnHover>
+    <AnimateIcon
+      animateOnView
+      animateOnViewOnce={false}
+      animateOnHover
+      loop
+      loopDelay={1800}
+    >
       <Fingerprint size={size} className={className} />
     </AnimateIcon>
   );

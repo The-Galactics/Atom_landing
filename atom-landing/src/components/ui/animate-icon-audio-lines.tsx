@@ -15,7 +15,13 @@ export function AnimateAudioLinesIcon({
   size = 64,
 }: AnimateAudioLinesIconProps) {
   return (
-    <AnimateIcon animateOnHover>
+    <AnimateIcon
+      animateOnView
+      animateOnViewOnce={false}
+      animateOnHover
+      loop
+      loopDelay={900}
+    >
       <AudioLines size={size} className={className} />
     </AnimateIcon>
   );

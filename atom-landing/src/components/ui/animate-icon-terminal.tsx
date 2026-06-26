@@ -15,7 +15,13 @@ export function AnimateTerminalIcon({
   size = 64,
 }: AnimateTerminalIconProps) {
   return (
-    <AnimateIcon animateOnHover>
+    <AnimateIcon
+      animateOnView
+      animateOnViewOnce={false}
+      animateOnHover
+      loop
+      loopDelay={1600}
+    >
       <Terminal size={size} className={className} />
     </AnimateIcon>
   );

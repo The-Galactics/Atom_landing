@@ -2,6 +2,7 @@
 
 import { BookOpen, GitBranch, Home } from "lucide-react";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import Orb from "@/components/CircleBackgound";
 import Dock from "@/components/Dock";
 import {
@@ -9,14 +10,16 @@ import {
   FlipButtonBack,
   FlipButtonFront,
 } from "@/components/animate-ui/components/buttons/flip";
-import { WelcomeProps } from "@/types/welcomeProps";
 import { AvatarGroupDemo } from "@/components/Avatars";
 import Containsrs from "@/components/containsrs";
 import AtomIaSection from "@/components/AtomIaSection";
 import Footer from "@/components/Footer";
+import { INSTALL_SECTION_ID } from "@/components/docs/docsContent";
 
 
-export const HomeContent = ({ onEnter = () => {} }: WelcomeProps) => {
+export const HomeContent = () => {
+  const router = useRouter();
+
   const items = [
     {
       icon: <Home size={18} />,
@@ -29,7 +32,7 @@ export const HomeContent = ({ onEnter = () => {} }: WelcomeProps) => {
     {
       icon: <BookOpen size={18} />,
       label: "Docs",
-      onClick: () => window.open("/docs", "_self"),
+      onClick: () => router.push("/docs"),
     },
     {
       icon: <GitBranch size={18} />,
@@ -113,7 +116,7 @@ export const HomeContent = ({ onEnter = () => {} }: WelcomeProps) => {
 
           <div>
             <FlipButton
-              onClick={onEnter}
+              onClick={() => router.push(`/docs?section=${INSTALL_SECTION_ID}`)}
               size="lg"
               className="mt-5 rounded-xl shadow-[0_0_24px_rgba(255,255,255,0.28)]"
             >

@@ -15,7 +15,13 @@ export function AnimatePickaxeIcon({
   size = 128,
 }: AnimatePickaxeIconProps) {
   return (
-    <AnimateIcon animateOnHover>
+    <AnimateIcon
+      animateOnView
+      animateOnViewOnce={false}
+      animateOnHover
+      loop
+      loopDelay={1200}
+    >
       <Pickaxe size={size} className={className} />
     </AnimateIcon>
   );

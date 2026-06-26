@@ -15,7 +15,13 @@ export function AnimateSparklesIcon({
   size = 128,
 }: AnimateSparklesIconProps) {
   return (
-    <AnimateIcon animateOnHover>
+    <AnimateIcon
+      animateOnView
+      animateOnViewOnce={false}
+      animateOnHover
+      loop
+      loopDelay={1000}
+    >
       <Sparkles size={size} className={className} />
     </AnimateIcon>
   );
