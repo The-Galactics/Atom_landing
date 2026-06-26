@@ -130,6 +130,13 @@ export const docSections: DocSection[] = [
         heading: "Designed to disappear",
         text: "The best assistant is the one you forget is there. Atom stays out of the way until you need it, then resolves multi-step tasks in seconds so you can get back to what matters.",
       },
+      {
+        // Imagen final de la sección.
+        image: {
+          src: "/ATOMsettings.png",
+          alt: "Atom adjusting device settings",
+        },
+      },
     ],
   },
   {

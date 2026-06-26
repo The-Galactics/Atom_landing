@@ -1189,7 +1189,7 @@ const MagicBento: React.FC<BentoProps> = ({
                     : 'bg-white/60 group-hover:bg-white'
                 }`}
               />
-              {atomSpeaking ? 'Stop talking' : 'Talk with ATOM!'}
+              ATOM
             </button>
           </div>
         </div>

@@ -1,6 +1,6 @@
 "use client";
 
-import { BookOpen, GitBranch, Home } from "lucide-react";
+import { BookOpen, Home } from "lucide-react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import Orb from "@/components/CircleBackgound";
@@ -33,16 +33,6 @@ export const HomeContent = () => {
       icon: <BookOpen size={18} />,
       label: "Docs",
       onClick: () => router.push("/docs"),
-    },
-    {
-      icon: <GitBranch size={18} />,
-      label: "GitHub",
-      onClick: () =>
-        window.open(
-          "https://github.com",
-          "_blank",
-          "noopener,noreferrer"
-        ),
     },
   ];
 

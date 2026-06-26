@@ -4,7 +4,7 @@ import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { AnimatePresence, motion } from "motion/react";
-import { ArrowLeft, ExternalLink, GitBranch, Home } from "lucide-react";
+import { ArrowLeft, Expand, ExternalLink, GitBranch, Home, X } from "lucide-react";
 import {
   Sidebar,
   SidebarContent,
@@ -27,6 +27,8 @@ import {
   GOOGLE_PLAY_URL,
 } from "@/components/docs/docsContent";
 import GooglePlayButton from "@/components/docs/GooglePlayButton";
+import QrCode from "@/components/docs/QrCode";
+import { CopyButton } from "@/components/animate-ui/components/buttons/copy";
 
 type DocsViewProps = {
   initialSection?: string;
@@ -67,6 +69,7 @@ export default function DocsView({ initialSection }: DocsViewProps) {
       ? initialSection
       : docSections[0].id;
   const [activeId, setActiveId] = useState(initialId);
+  const [qrOpen, setQrOpen] = useState(false);
   const active =
     docSections.find((s) => s.id === activeId) ?? docSections[0];
 
@@ -329,20 +332,72 @@ export default function DocsView({ initialSection }: DocsViewProps) {
                 )}
 
                 {active.googlePlay && (
-                  <motion.div variants={itemVariants} className="mt-10">
+                  <motion.div
+                    variants={itemVariants}
+                    className="mt-10 flex flex-col items-start gap-6"
+                  >
                     <GooglePlayButton href={GOOGLE_PLAY_URL} />
+
+                    {/* Alternativa: escanea el QR para abrir Google Play */}
+                    <div className="relative flex items-center gap-5 rounded-2xl border border-white/10 bg-white/[0.02] p-5 sm:w-fit">
+                      {/* Botón en la esquina para agrandar el QR */}
+                      <button
+                        type="button"
+                        onClick={() => setQrOpen(true)}
+                        aria-label="Enlarge QR code"
+                        className="absolute right-3 top-3 flex h-7 w-7 items-center justify-center rounded-lg border border-white/10 bg-white/[0.04] text-white/60 transition-all hover:scale-110 hover:border-white/30 hover:text-white"
+                      >
+                        <Expand className="h-3.5 w-3.5" />
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => setQrOpen(true)}
+                        aria-label="Enlarge QR code"
+                        className="rounded-xl bg-white p-2.5 transition-transform hover:scale-[1.03]"
+                      >
+                        <QrCode data={GOOGLE_PLAY_URL} size={132} />
+                      </button>
+                      <div className="flex flex-col gap-1">
+                        <p className="text-xs font-bold uppercase tracking-[0.18em] text-white/50">
+                          Or scan to install
+                        </p>
+                        <p className="max-w-[16rem] text-sm leading-relaxed text-white/60">
+                          Point your phone&apos;s camera at the QR code to open
+                          Atom on the Google Play Store.
+                        </p>
+                      </div>
+                    </div>
+
+                    {/* Último recurso: copiar el link directamente */}
+                    <div className="flex w-full flex-col gap-2 sm:w-fit">
+                      <p className="text-xs font-bold uppercase tracking-[0.18em] text-white/40">
+                        Still stuck? Copy the link
+                      </p>
+                      <div className="flex items-center gap-2 rounded-xl border border-white/10 bg-white/[0.02] py-2 pl-4 pr-2">
+                        <span className="truncate font-mono text-sm text-white/70">
+                          {GOOGLE_PLAY_URL}
+                        </span>
+                        <CopyButton
+                          content={GOOGLE_PLAY_URL}
+                          variant="ghost"
+                          size="sm"
+                          aria-label="Copy Google Play link"
+                          className="text-white/60 hover:text-white"
+                        />
+                      </div>
+                    </div>
                   </motion.div>
                 )}
 
                 {active.steps && active.steps.length > 0 && (
                   <motion.ol
                     variants={itemVariants}
-                    className="mt-12 flex flex-col gap-6 border-t border-white/10 pt-10"
+                    className="mt-12 flex flex-col border-t border-white/10 pt-10"
                   >
                     {active.steps.map((step, i) => (
                       <motion.li
                         key={i}
-                        className="flex gap-4"
+                        className="relative flex gap-4 pb-8 last:pb-0"
                         initial={{ opacity: 0, x: -12 }}
                         animate={{ opacity: 1, x: 0 }}
                         transition={{
@@ -351,7 +406,14 @@ export default function DocsView({ initialSection }: DocsViewProps) {
                           delay: 0.3 + i * 0.08,
                         }}
                       >
-                        <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-white/15 bg-white/[0.04] text-sm font-semibold text-white">
+                        {/* Línea recta que conecta este número con el siguiente */}
+                        {active.steps && i < active.steps.length - 1 && (
+                          <span
+                            aria-hidden="true"
+                            className="absolute left-4 top-9 bottom-1 w-px -translate-x-1/2 bg-gradient-to-b from-white/25 to-white/5"
+                          />
+                        )}
+                        <span className="relative z-10 flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-white/15 bg-white/[0.04] text-sm font-semibold text-white">
                           {i + 1}
                         </span>
                         <div className="flex flex-col gap-1">
@@ -371,6 +433,48 @@ export default function DocsView({ initialSection }: DocsViewProps) {
           </main>
         </SidebarInset>
       </SidebarProvider>
+
+      {/* Lightbox: QR ampliado con transición de entrada y salida */}
+      <AnimatePresence>
+        {qrOpen && (
+          <motion.div
+            className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 p-6 backdrop-blur-sm"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.25, ease: easeOut }}
+            onClick={() => setQrOpen(false)}
+          >
+            <motion.div
+              className="relative flex flex-col items-center gap-5 rounded-3xl border border-white/10 bg-[#0A0A0C] p-8"
+              initial={{ opacity: 0, scale: 0.85, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.85, y: 20 }}
+              transition={{ duration: 0.3, ease: easeOut }}
+              onClick={(e) => e.stopPropagation()}
+            >
+              <button
+                type="button"
+                onClick={() => setQrOpen(false)}
+                aria-label="Close"
+                className="absolute -right-3 -top-3 flex h-9 w-9 items-center justify-center rounded-full border border-white/10 bg-[#0A0A0C] text-white/60 transition-all hover:scale-110 hover:border-white/30 hover:text-white"
+              >
+                <X className="h-4 w-4" />
+              </button>
+              <div className="rounded-2xl bg-white p-5">
+                <QrCode
+                  data={GOOGLE_PLAY_URL}
+                  size={420}
+                  className="h-[min(70vw,420px)] w-[min(70vw,420px)]"
+                />
+              </div>
+              <p className="text-base text-white/60">
+                Scan to download Atom on Google Play
+              </p>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }
