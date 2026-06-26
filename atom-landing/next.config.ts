@@ -5,3 +5,8 @@ const nextConfig: NextConfig = {
 };
 
 export default nextConfig;
+
+// Enables the OpenNext Cloudflare adapter during `next dev` so Workers bindings
+// (and `getCloudflareContext`) work locally. No-op for the production build.
+import { initOpenNextCloudflareForDev } from "@opennextjs/cloudflare";
+initOpenNextCloudflareForDev();
