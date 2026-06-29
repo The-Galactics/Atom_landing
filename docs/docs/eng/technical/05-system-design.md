@@ -1,4 +1,4 @@
-# Visual Identity Guide -  [Atom]:
+# Visual Identity Guide:
 
 ## Typography:
 
